@@ -1,0 +1,29 @@
+# docker-compose.yml
+version: '2'
+services:
+  terminalroast_mysql:
+    container_name: terminalroast_mysql
+    image: mysql:5.7
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: terminalroasterpasswd
+      MYSQL_DATABASE: terminalroastDB
+      MYSQL_USER: terminalroaster
+      MYSQL_PASSWORD: terminalroasterpasswd
+    volumes:
+      - ./sql/:/docker-entrypoint-initdb.d/
+      - terminalroast_mysql:/var/lib/mysql
+
+  terminalroast_python:
+    container_name: terminalroast_python
+    build:
+      context: .
+      dockerfile: docker/terminalroast_python/Dockerfile
+    image: terminalroast_python
+    devices:
+      - '/dev/ttyUSB0:/dev/ttyUSB0'
+
+volumes:
+  terminalroast_mysql:
+
