@@ -1,13 +1,11 @@
-FROM ubuntu:17.10
+FROM debian:9
 
 RUN apt-get update \
       && apt-get install -y \
-        git \
         python3 \
         python3-pip \
-        libmysqlclient-dev \
-        sudo \
-        vim
+        default-libmysqlclient-dev \
+        sudo
 
 COPY . /app 
 
